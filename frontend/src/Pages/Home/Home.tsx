@@ -1,13 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
+import API from "@/Api.ts";
 export function Home() {
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:5000/test")
+    API.get("/test")
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -42,7 +41,6 @@ export function Home() {
       >
         <Typography>{message}</Typography>
         <Button>Click me</Button>
-        <Button>Button 2</Button>
       </Box>
     </Box>
   );

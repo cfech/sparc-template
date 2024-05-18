@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  app:
+    tty: true
+    stdin_open: true # docker run -i
+    image: sparc-template
+    ports:
+      - "5001:5001"
