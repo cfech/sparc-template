@@ -42,6 +42,7 @@ export function Home() {
       >
         <Typography>{message}</Typography>
         <Button>Click me</Button>
+        <Button>Button 2</Button>
       </Box>
     </Box>
   );
