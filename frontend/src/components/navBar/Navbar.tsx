@@ -50,10 +50,12 @@ export function Navbar() {
         <div className="flex items-center justify-between p-2">
           <NavLink
             to={"/"}
-            className="justify-center items-center text-white text-center bg-primary-main sm:flex hidden cursor-pointer"
+            className="justify-center items-center text-center sm:flex hidden cursor-pointer"
           >
-            <h1 className="text-xl">Example Project</h1>
+            Example Project
           </NavLink>
+
+
 
           <div className="hidden sm:flex ml-auto w-4/5 justify-start items-center h-16">
             <CustomListItemButton to={"/"} primary={"Home"} />

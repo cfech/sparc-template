@@ -70,13 +70,13 @@ export function Example() {
   };
 
   return (
-    <div className="flex">
-      <div className="sm:w-8/12 border-red-500 overflow-x-scroll">
+    <div className="flex m-4">
+      <div className="sm:w-8/12 border-2 border-red-500 overflow-x-scroll">
         <h4 className="text-primary">
           Click the button to get some random user data
         </h4>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded"
           id="get-users-button"
           onClick={getUsers}
         >
@@ -86,11 +86,11 @@ export function Example() {
         <UserTable userData={randomUsers} />
       </div>
 
-      <div className="sm:w-1/12 border-yellow-500 sm:block hidden">
+      <div className="sm:w-1/12 border-2 border-yellow-500 sm:block hidden">
         {/* Divider goes here */}
       </div>
 
-      <div className="sm:w-3/12 w-full border-green-500">
+      <div className="sm:w-3/12 w-full border-2  border-green-400 border-solid">
         <ExampleSearchBar
           listItems={listItems}
           updateExampleList={updateExampleList}

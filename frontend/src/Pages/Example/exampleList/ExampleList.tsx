@@ -38,7 +38,7 @@ export const ExampleList = ({
           console.log(item, index);
           return (
             <li
-              className="py-2 border-b border-gray-200 bg-primary-light text-primary"
+              className="py-2 border-b border-gray-200"
               key={index}
             >
               <button
