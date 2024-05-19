@@ -1,7 +1,7 @@
 import React from "react";
 
-import { ThemeContextWrapper } from "./contextWrappers/ThemeContextWrapper.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "@/context/contextWrappers/ThemeProviderContext.tsx";
 
 export interface GlobalContextProps {
   children: React.ReactNode;
@@ -18,7 +18,9 @@ const queryClient = new QueryClient({
 export const GlobalContextWrapper = ({ children }: GlobalContextProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeContextWrapper>{children}</ThemeContextWrapper>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        {children}
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

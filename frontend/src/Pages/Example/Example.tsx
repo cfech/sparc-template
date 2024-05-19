@@ -1,17 +1,9 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import UserTable from "./userTable/UserTable.tsx";
 import { useEffect, useState } from "react";
 import { UserData } from "../../Interfaces.ts";
 import axios from "axios";
 import { ExampleList } from "./exampleList/ExampleList.tsx";
 import { ExampleSearchBar } from "./exampleSearchBar/ExampleSearchBar.tsx";
+import UserTable from "@/Pages/Example/userTable/UserTable.tsx";
 
 export function Example() {
   const [randomUsers, setRandomUsers] = useState<UserData[]>([]);
@@ -20,7 +12,7 @@ export function Example() {
   const [listItems, setListItems] = useState<string[]>([]);
 
   // Get theme object from MUI
-  const theme = useTheme();
+  const theme = "get from tailwind";
 
   // Check the console to view the theme object
   useEffect(() => {
@@ -78,57 +70,37 @@ export function Example() {
   };
 
   return (
-    // MUI pallet can be accessed by the string notation as seen here
-    <Box>
-      {/*Grid allows us to easily create pages layouts*/}
-      {/*The numbers of each grid container must add up to 12*/}
-      {/*sm={8} means the component will take up 8/12 sections of the screen.*/}
-      {/*Once the screen is smaller than sm (900 px) then the item will take up the full width*/}
-      <Grid container>
-        <Grid item sm={8} sx={{ border: "3px solid red", overflowX: "scroll" }}>
-          <Typography variant={"h4"} color="text.primary">
-            Click the button to get some random user data
-          </Typography>
-
-          {/*MUI theme can be accessed by the object notation as seen here*/}
-          <Button
-            data-testid={"get-users-button"}
-            onClick={getUsers}
-            variant={"contained"}
-          >
-            Get Users
-          </Button>
-          <h1>Users:</h1>
-          <UserTable userData={randomUsers} />
-        </Grid>
-
-        {/*Custom Spacer*/}
-        <Grid
-          item
-          sm={1}
-          sx={{
-            border: "3px solid yellow",
-            display: { xs: "none", sm: "block" },
-          }}
+    <div className="flex">
+      <div className="sm:w-8/12 border-red-500 overflow-x-scroll">
+        <h4 className="text-primary">
+          Click the button to get some random user data
+        </h4>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          id="get-users-button"
+          onClick={getUsers}
         >
-          <Divider orientation="vertical" flexItem />
-        </Grid>
+          Get Users
+        </button>
+        <h1>Users:</h1>
+        <UserTable userData={randomUsers} />
+      </div>
 
-        {/*Search bar and list component*/}
-        <Grid item sm={3} xs sx={{ border: "3px solid green" }}>
-          {/*Passing the update example list method and the listItems as props  to be used by the Example search bar*/}
-          <ExampleSearchBar
-            listItems={listItems}
-            updateExampleList={updateExampleList}
-          />
+      <div className="sm:w-1/12 border-yellow-500 sm:block hidden">
+        {/* Divider goes here */}
+      </div>
 
-          {/*Passing the update example list method and the listItems  as props to be used by the Example List*/}
-          <ExampleList
-            listItems={listItems}
-            updateExampleList={updateExampleList}
-          />
-        </Grid>
-      </Grid>
-    </Box>
+      <div className="sm:w-3/12 w-full border-green-500">
+        <ExampleSearchBar
+          listItems={listItems}
+          updateExampleList={updateExampleList}
+        />
+
+        <ExampleList
+          listItems={listItems}
+          updateExampleList={updateExampleList}
+        />
+      </div>
+    </div>
   );
 }

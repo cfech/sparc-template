@@ -1,5 +1,5 @@
-import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
+import { Button } from "@/components/ui/button.tsx";
 
 interface ExampleSearchBarProps {
   listItems: string[];
@@ -30,18 +30,12 @@ export const ExampleSearchBar = ({
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: { sm: "column", md: "row" },
-        alignItems: { sm: "center", md: "flex-end" },
-        justifyContent: "space-evenly",
-      }}
-    >
-      <TextField
+    <div className="flex flex-col sm:flex-row items-center md:items-end justify-evenly">
+      <input
         id="standard-basic"
-        label="Add to list"
-        variant="standard"
+        className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text"
+        placeholder="Add to list"
         value={currentValue}
         onChange={(e) => {
           setCurrentValue(e.target.value);
@@ -54,8 +48,6 @@ export const ExampleSearchBar = ({
         }}
       />
       <Button
-        sx={{ marginTop: { sm: "0.5rem", md: "0" } }}
-        variant={"contained"}
         onClick={() => {
           if (currentValue.length > 0) {
             addItemToList();
@@ -64,6 +56,6 @@ export const ExampleSearchBar = ({
       >
         Submit
       </Button>
-    </Box>
+    </div>
   );
 };

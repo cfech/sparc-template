@@ -1,36 +1,9 @@
-import { Box, Typography } from "@mui/material";
 import { Button } from "@/components/ui/button";
-import API from "@/Api.ts";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-
-// React query function must return a promise
-const pingBackend = async () => {
-  try {
-    const res = await API.get("/test");
-    console.log(res);
-    return res.data.message;
-  } catch (err) {
-    console.log(err);
-    return "Error";
-  }
-};
-
-export function usePingQuery() {
-  return useQuery({
-    queryKey: ["ping"],
-    queryFn: pingBackend,
-    staleTime: 5 * 60 * 1000, // 5 minutes in milliseconds
-  });
-}
+import { useQueryClient } from "@tanstack/react-query";
+import { usePingQuery } from "@/Pages/Example/QueryExample.tsx";
 
 export function Home() {
   const queryClient = useQueryClient();
-
-  // const { isPending, error, data } = useQuery({
-  //   queryKey: ["ping"],
-  //   queryFn: pingBackend,
-  //   staleTime: 0,
-  // });
 
   const { isPending, error, data } = usePingQuery();
 
@@ -39,8 +12,8 @@ export function Home() {
   console.log(cachedData);
 
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -48,23 +21,22 @@ export function Home() {
         minHeight: "65vh",
       }}
     >
-      <Box
-        sx={{
+      <div
+        style={{
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "left",
           height: "auto",
+          justifyContent: "left",
           width: "80%",
           marginTop: "10vh",
-          marginBottom: { xs: "5vh", sm: "3vh", md: "0vh" },
+          flexDirection: "column",
           textAlign: "left",
         }}
       >
         {isPending ? "Loading..." : null}
         {error ? "An error has occurred: " + error.message : null}
-        {data ? <Typography>{data}</Typography> : null}
+        {data ? <p>{data}</p> : null}
         <Button>Click me</Button>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

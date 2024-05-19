@@ -1,32 +1,22 @@
-import { useTheme } from "@mui/material";
-import { ThemeToggle } from "../themeToggle/ThemeToggle.tsx";
-import MenuIcon from "@mui/icons-material/Menu";
-import * as React from "react";
-import Drawer from "@mui/material/Drawer";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import { AppBar, Toolbar, Typography, IconButton, Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { NavbarDrawer } from "./NavbarDrawer.tsx";
 
 import { NavLink, useLocation } from "react-router-dom";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { ThemeToggle } from "@/components/themeToggle/ThemeToggle.tsx";
+import { NavigationMenu } from "@/components/ui/navigation-menu.tsx";
 
-interface navBarProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
-export function Navbar({ window }: navBarProps) {
-  const drawerWidth = 240;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState: any) => !prevState);
-  };
-
+export function Navbar() {
   const CustomListItemButton = ({ to, primary, fullWidth }: any) => {
-    const theme = useTheme();
     const location = useLocation();
     const [selected, setSelected] = useState<boolean>(to === location.pathname);
 
@@ -36,118 +26,61 @@ export function Navbar({ window }: navBarProps) {
       }
     }, [location]);
 
-    const selectedStyles = {
-      borderBottom: "5px solid",
-      borderColor: theme.palette.background.paper,
-      textAlign: "center",
-
-      "&:hover": {
-        borderBottom: "5px solid",
-        borderColor: theme.palette.secondary.main,
-        borderRadius: "5px",
-      },
-    };
-
-    const unselectedStyles = {
-      borderBottom: "5px solid",
-      borderColor: "transparent",
-      "&:hover": {
-        borderBottom: "5px solid",
-        borderColor: theme.palette.secondary.main,
-        borderRadius: "5px",
-      },
-    };
-
     return (
-      <ListItem sx={{ width: fullWidth ? "100%" : "fit-content" }}>
-        <ListItemButton
-          component={NavLink}
+      <li className={`list-none ${fullWidth ? "w-full" : "w-auto"}`}>
+        <NavLink
           to={to}
-          sx={selected ? selectedStyles : unselectedStyles}
+          className={`block py-2 px-4 ${
+            selected
+              ? "border-b-2 border-black"
+              : "border-b-2 border-transparent"
+          }`}
         >
           {primary}
-        </ListItemButton>
-      </ListItem>
+        </NavLink>
+      </li>
     );
   };
 
   // ====================================================================
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
-    <Box sx={{ marginBottom: "5rem" }}>
-      <AppBar
-        component="nav"
-        sx={{ backgroundColor: "primary.main", backgroundImage: "none" }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Box
-            justifyContent="center"
-            alignItems="center"
-            component={NavLink}
-            sx={{
-              textDecoration: "none",
-              color: "inherit",
-              textAlign: "center",
-              backgroundColor: "primary.main",
-              display: { xs: "none", sm: "flex" },
-              cursor: "pointer",
-            }}
+    <div className="mb-20">
+      <NavigationMenu>
+        <div className="flex items-center justify-between p-2">
+          <NavLink
             to={"/"}
+            className="justify-center items-center text-white text-center bg-primary-main sm:flex hidden cursor-pointer"
           >
-            <Typography variant="h6" color="inherit" component="h1">
-              Example Project
-            </Typography>
-          </Box>
+            <h1 className="text-xl">Example Project</h1>
+          </NavLink>
 
-          <Box
-            sx={{
-              display: { xs: "none", sm: "flex" },
-              marginLeft: "auto",
-              width: "80%",
-              justifyContent: "flex-start",
-              height: "64px",
-              alignItems: "center",
-            }}
-          >
+          <div className="hidden sm:flex ml-auto w-4/5 justify-start items-center h-16">
             <CustomListItemButton to={"/"} primary={"Home"} />
             <CustomListItemButton to={"/example"} primary={"Example"} />
             <ThemeToggle />
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Box component="nav">
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {<NavbarDrawer handleDrawerToggle={handleDrawerToggle} />}
+          </div>
+        </div>
+
+        <Drawer>
+          <DrawerTrigger>Open</DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+              <DrawerDescription>
+                This action cannot be undone.
+              </DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter>
+              <CustomListItemButton to={"/"} primary={"Home"} />
+              <CustomListItemButton to={"/example"} primary={"Example"} />
+              <DrawerClose>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
         </Drawer>
-      </Box>
-    </Box>
+      </NavigationMenu>
+    </div>
   );
 }

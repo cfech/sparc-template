@@ -1,10 +1,3 @@
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
-import { ListItemButton } from "@mui/material";
-
 interface exampleListProps {
   listItems: string[];
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -38,40 +31,30 @@ export const ExampleList = ({
   };
 
   return (
-    <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
-      <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-        Test List
-      </Typography>
-      <List
-        sx={{
-          width: "80%",
-          margin: "auto",
-          maxHeight: "400px",
-          overflowY: "scroll",
-        }}
-      >
+    <div className="flex-grow max-w-3xl">
+      <div className="mt-16 mb-8 text-lg">Test List</div>
+      <ul className="w-4/5 mx-auto max-h-96 overflow-y-scroll">
         {listItems.map((item, index) => {
           console.log(item, index);
           return (
-            <ListItem
-              disablePadding
+            <li
+              className="py-2 border-b border-gray-200 bg-primary-light text-primary"
               key={index}
-              divider
-              sx={{ backgroundColor: "primary.light", color: "text.primary" }}
             >
-              <ListItemButton
+              <button
                 // Assign a data-idx to the list item button so we know which index is clicked on
                 data-idx={index}
                 onClick={(e) => {
                   removeListItem(e.currentTarget.dataset.idx!);
                 }}
+                className="w-full text-left"
               >
-                <ListItemText primary={item} />
-              </ListItemButton>
-            </ListItem>
+                {item}
+              </button>
+            </li>
           );
         })}
-      </List>
-    </Box>
+      </ul>
+    </div>
   );
 };

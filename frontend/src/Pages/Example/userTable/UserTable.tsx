@@ -1,13 +1,7 @@
 // @ts-ignore
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { UserData } from "../../../Interfaces.ts";
+
+import { UserData } from "@/Interfaces.ts";
 
 interface UserTableProps {
   userData: UserData[];
@@ -15,41 +9,52 @@ interface UserTableProps {
 
 const UserTable = ({ userData }: UserTableProps) => {
   return (
-    <TableContainer component={Paper}>
-      <Table
-        sx={{ minWidth: "100%", overflowX: "scroll" }}
-        size="small"
-        aria-label="a dense table"
-      >
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">Image</TableCell>
-            <TableCell align="center">First Name</TableCell>
-            <TableCell align="center">Last Name</TableCell>
-            <TableCell align="center">Email</TableCell>
-            <TableCell align="center">Phone</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+    <div className="w-full overflow-x-scroll">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Image
+            </th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              First Name
+            </th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Last Name
+            </th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Email
+            </th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Phone
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
           {userData.length > 0
             ? userData.map((user: UserData) => (
-                <TableRow
-                  key={user.name.first}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="center">
+                <tr key={user.name.first}>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
                     <img src={user.picture.thumbnail} />
-                  </TableCell>
-                  <TableCell align="center">{user.name.first}</TableCell>
-                  <TableCell align="center">{user.name.last}</TableCell>
-                  <TableCell align="center">{user.email}</TableCell>
-                  <TableCell align="center">{user.phone}</TableCell>
-                </TableRow>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    {user.name.first}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    {user.name.last}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    {user.email}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    {user.phone}
+                  </td>
+                </tr>
               ))
             : null}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
+    </div>
   );
 };
 

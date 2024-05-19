@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Typography } from "@mui/material";
 import { Button } from "@/components/ui/button";
 import API from "@/Api.ts";
-import { useQuery } from "@tanstack/react-query";
-import { usePingQuery } from "@/Pages/Home/Home.tsx";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const pingBackend2 = async () => {
+const pingBackend = async () => {
   try {
     const res = await API.get("/test");
     console.log(res);
@@ -16,14 +14,16 @@ const pingBackend2 = async () => {
   }
 };
 
+export function usePingQuery() {
+  return useQuery({
+    queryKey: ["ping"],
+    queryFn: pingBackend,
+    staleTime: 5 * 60 * 1000, // 5 minutes in milliseconds
+  });
+}
+
 // Define your two components
 const Component1 = () => {
-  // const { isPending, error, data } = useQuery({
-  //   queryKey: ["ping1"],
-  //   queryFn: pingBackend2,
-  //   // staleTime: 5 * 60 * 1000, // 5 minutes in milliseconds
-  // });
-
   const { isPending, error, data } = usePingQuery();
 
   if (isPending) return "Loading...";
@@ -33,17 +33,11 @@ const Component1 = () => {
   return (
     <>
       <div>Component 1</div>
-      <Typography>{data}</Typography>
+      <p>{data}</p>
     </>
   );
 };
 const Component2 = () => {
-  // const { isPending, error, data } = useQuery({
-  //   queryKey: ["ping2"],
-  //   queryFn: pingBackend2,
-  //   // staleTime: 5 * 60 * 1000, // 5 minutes in milliseconds
-  // });
-
   const { isPending, error, data } = usePingQuery();
 
   if (isPending) return "Loading...";
@@ -53,7 +47,7 @@ const Component2 = () => {
   return (
     <>
       <div>Component 2</div>
-      <Typography>{data}</Typography>
+      <p>{data}</p>
     </>
   );
 };
@@ -61,6 +55,8 @@ const Component2 = () => {
 export const QueryExample = () => {
   // Define a state variable to keep track of which component is currently shown
   const [isComponent1Shown, setIsComponent1Shown] = useState(true);
+
+  const queryClient = useQueryClient();
 
   // Define a function to toggle the state variable
   const toggleComponent = () => {
@@ -74,6 +70,13 @@ export const QueryExample = () => {
 
       {/* Render a button to toggle the state variable */}
       <Button onClick={toggleComponent}>Toggle Component</Button>
+      <Button
+        onClick={() => {
+          queryClient.removeQueries({ queryKey: ["ping"] });
+        }}
+      >
+        Evict
+      </Button>
     </div>
   );
 };
