@@ -1,21 +1,42 @@
 import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import API from "@/Api.ts";
-export function Home() {
-  const [message, setMessage] = useState<string>("");
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-  useEffect(() => {
-    API.get("/test")
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        setMessage(res.data.message);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+// React query function must return a promise
+const pingBackend = async () => {
+  try {
+    const res = await API.get("/test");
+    console.log(res);
+    return res.data.message;
+  } catch (err) {
+    console.log(err);
+    return "Error";
+  }
+};
+
+export function usePingQuery() {
+  return useQuery({
+    queryKey: ["ping"],
+    queryFn: pingBackend,
+    staleTime: 5 * 60 * 1000, // 5 minutes in milliseconds
   });
+}
+
+export function Home() {
+  const queryClient = useQueryClient();
+
+  // const { isPending, error, data } = useQuery({
+  //   queryKey: ["ping"],
+  //   queryFn: pingBackend,
+  //   staleTime: 0,
+  // });
+
+  const { isPending, error, data } = usePingQuery();
+
+  const cachedData = queryClient.getQueryData(["ping"]);
+
+  console.log(cachedData);
 
   return (
     <Box
@@ -39,7 +60,9 @@ export function Home() {
           textAlign: "left",
         }}
       >
-        <Typography>{message}</Typography>
+        {isPending ? "Loading..." : null}
+        {error ? "An error has occurred: " + error.message : null}
+        {data ? <Typography>{data}</Typography> : null}
         <Button>Click me</Button>
       </Box>
     </Box>

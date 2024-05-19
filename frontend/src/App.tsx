@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 import { GlobalContextWrapper } from "./context/GlobalContextWrapper.tsx";
 import { Footer } from "./components/footer/Footer.tsx";
 import { Example } from "./Pages/Example/Example.tsx";
+import { QueryExample } from "./Pages/Example/QueryExample.tsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/example" element={<Example />} />
+            <Route path="query" element={<QueryExample />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Box>

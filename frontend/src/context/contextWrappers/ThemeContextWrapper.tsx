@@ -5,7 +5,7 @@ import {
   PaletteMode,
   ThemeProvider,
 } from "@mui/material";
-import { getDesignTokens } from "../../theme.ts";
+import { getDesignTokens } from "@/theme.ts";
 
 export interface GlobalContextProps {
   children: React.ReactNode;
