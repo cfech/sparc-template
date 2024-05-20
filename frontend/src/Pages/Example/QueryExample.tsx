@@ -18,7 +18,7 @@ export function usePingQuery() {
   return useQuery({
     queryKey: ["ping"],
     queryFn: pingBackend,
-    staleTime: 5 * 60 * 1000, // 5 minutes in milliseconds
+    staleTime: 5000, // 5 minutes in milliseconds
   });
 }
 

@@ -1,11 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePingQuery } from "@/Pages/Example/QueryExample.tsx";
+import { useTheme } from "@/context/contextWrappers/ThemeProviderContext.tsx";
 
 export function Home() {
   const queryClient = useQueryClient();
 
   const { isPending, error, data } = usePingQuery();
+
+  const theme = useTheme();
+  console.log(theme);
 
   const cachedData = queryClient.getQueryData(["ping"]);
 

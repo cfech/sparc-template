@@ -2,6 +2,7 @@ import React from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/context/contextWrappers/ThemeProviderContext.tsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export interface GlobalContextProps {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ export const GlobalContextWrapper = ({ children }: GlobalContextProps) => {
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         {children}
       </ThemeProvider>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 };
