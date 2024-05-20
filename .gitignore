@@ -25,6 +25,7 @@ dist-ssr
 
 .env
 test-coverage
-./backend/static
-./backend/__pycache__/
+/backend/static/
+/backend/__pycache__/
+
 
