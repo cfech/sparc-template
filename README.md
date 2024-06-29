@@ -1,4 +1,5 @@
-# sparc-template
+# Python Flask React Template
+
 
 ## Tech Stack
 - Python

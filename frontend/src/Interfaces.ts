@@ -1,3 +1,5 @@
+
+// For example page
 export interface UserData {
   gender: string;
   name: {
@@ -17,4 +19,18 @@ export interface UserData {
     medium: string;
     thumbnail: string;
   };
+}
+
+
+// Information provided from firebase about the logged in user
+export interface UserInfo {
+  displayName: string | null;
+  email: string | null;
+  phoneNumber: string | null;
+  photoURL: string | null;
+  providerId: string;
+  /**
+   * The user's unique ID.
+   */
+  uid: string;
 }
